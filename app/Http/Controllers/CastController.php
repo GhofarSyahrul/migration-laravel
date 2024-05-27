@@ -13,7 +13,8 @@ class CastController extends Controller
      */
     public function index()
     {
-        //
+        $casts = Cast::select('id','nama', 'umur')->get();
+        return view('cast.index', compact('casts'));
     }
 
     /**
@@ -30,9 +31,12 @@ class CastController extends Controller
      */
     public function store(StoreCastRequest $request, Cast $cast)
     {
-        //
+        //proses masukan data ke tabel cast
         $cast->create($request->all());
-        return redirect()->route('cast.index')->with(['success' => 'Data '.$request['nama'].' berhasil disimpan']);
+        // kalo udh di simpan maka di redirect ke halaman index
+        return redirect()
+                ->route('cast.index')
+                ->with(['success' => 'Data '.$request['nama'].' berhasil disimpan']);
     }
 
     /**

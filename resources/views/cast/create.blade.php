@@ -35,7 +35,7 @@
           <div class="col col-md-3">
             <label for="nama" class="form-label">Nama</label>
           </div>
-          <div class="col-12 col-md-9">
+          <di v class="col-12 col-md-9">
             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Enter Nama" value="{{ old('nama') }}">
             <small class="help-block form-text">Please enter your name.</small>
             @error('nama')
@@ -43,7 +43,7 @@
                 <strong>{{ $message }}</strong>
               </span>
             @enderror
-          </div>
+          </di>
         </div>
   
         {{-- Umur Input --}}
