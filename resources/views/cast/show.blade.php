@@ -23,53 +23,63 @@
 @endpush
 
 @section('content')
-<div class="main-content">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
-            <div class="row m-t-30">
-                <div class="col-md-12">
-                    <!-- DATA TABLE-->
-                    <div class="table-responsive m-b-36">
-                        <table class="table table-borderless table-data3">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Umur</th>
-                                    <th>Action</th>
-                                  </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($casts as $key => $value)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $value->nama }}</td>
-                                        <td>{{ $value->umur }}</td>
-                                        <td><form action="{{ route('cast.destroy', $value->id) }}" method="POST">
-                                            <a href="{{ route('cast.show', $value->id) }}" class="btn btn-sm btn-info">Detail</a>
-                                            {{-- @if(Auth::check())
-                                            @can('isAdmin') --}}
-                                            <a href="{{ route('cast.edit', $value->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="submit" class="btn btn-sm btn-danger my-1" value="Delete">
-                                            {{-- @endcan --}}
-                                        </form>
-                                        {{-- @endif --}}
-                                    </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="4" class="text-center">No data available</td>
-                                  </tr>
-                                @endforelse                                                            
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- END DATA TABLE-->
-                </div>
-            </div>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>DataTables</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ route('cast.index') }}">Home</a></li>
+              <li class="breadcrumb-item active">DataTables</li>
+            </ol>
+          </div>
         </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <div class="row">
+  <!-- left column -->
+  <div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form action="{{ route('cast.store') }}" method="POST">
+        @csrf
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nama">Nama Pemeran</label>
+                <input name="nama" type="text" class="form-control" id="nama"  placeholder="Nama Pemeran" value="{{ $cast['nama'] }}" @disabled(true)>
+              </div>
+
+              <div class="form-group">
+                <label for="nama">Umur</label>
+                <input name="umur" type="number" class="form-control" id="nama"  placeholder="Umur Pemeran" value="{{ $cast['umur']}}" @disabled(true)>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nama">Biografi Pemeran</label>
+                <textarea name="bio" id="bio" class="form-control" cols="30" rows="5" placeholder="Biografi Pemeran" @disabled(true)>{{ $cast['bio'] }}</textarea>
+              </div>
+
+            </div>
+          </div>
+          <div class="px-3 d-flex justify-content-between align-items-center">
+            <a href="{{ route('cast.index') }}" class="btn btn-primary">Kembali</a>
+          </div>
+        </div>
+      </form>
     </div>
+    <!-- /.card -->
+  </div>
+</div>
 </div>
 @endsection
 

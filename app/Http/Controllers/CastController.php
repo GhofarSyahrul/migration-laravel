@@ -13,6 +13,7 @@ class CastController extends Controller
      */
     public function index()
     {
+        //
         $casts = Cast::select('id','nama', 'umur')->get();
         return view('cast.index', compact('casts'));
     }
@@ -31,12 +32,9 @@ class CastController extends Controller
      */
     public function store(StoreCastRequest $request, Cast $cast)
     {
-        //proses masukan data ke tabel cast
+        //
         $cast->create($request->all());
-        // kalo udh di simpan maka di redirect ke halaman index
-        return redirect()
-                ->route('cast.index')
-                ->with(['success' => 'Data '.$request['nama'].' berhasil disimpan']);
+        return redirect()->route('cast.index')->with(['success' => 'Data '.$request['nama'].' berhasil disimpan']);
     }
 
     /**
@@ -45,6 +43,7 @@ class CastController extends Controller
     public function show(Cast $cast)
     {
         //
+        return view('cast.show', compact('cast'));
     }
 
     /**
@@ -53,6 +52,7 @@ class CastController extends Controller
     public function edit(Cast $cast)
     {
         //
+        return view('cast.edit', compact('cast'));
     }
 
     /**
@@ -61,6 +61,13 @@ class CastController extends Controller
     public function update(UpdateCastRequest $request, Cast $cast)
     {
         //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'umur' => 'required|integer',
+            'bio' => 'nullable|string',
+        ]);
+        $cast->update($request->all());
+        return redirect()->route('cast.index')->with('success', 'Cast updated successfully');
     }
 
     /**
@@ -69,5 +76,7 @@ class CastController extends Controller
     public function destroy(Cast $cast)
     {
         //
+        $cast->delete();
+        return redirect()->route('cast.index')->with('success', 'Cast deleted successfully');
     }
 }
